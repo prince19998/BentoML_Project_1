@@ -35,9 +35,9 @@ from dagshub import dagshub_logger
 # Set the MLflow tracking URI
 mlflow.set_tracking_uri("https://dagshub.com/prince19998/BentoML_Project_1.mlflow")
 
-# Initialize the DagsHub logger
-logger = dagshub_logger(repo_owner="prince19998", repo_name="BentoML_Project_1")
-logger.init(mlflow=True)  # This will enable DagsHub's MLflow tracking
+# Initialize DagsHub logger (used as a context manager)
+with dagshub_logger() as logger:
+    logger.log_metrics({"accuracy": 0.95})  # Example of logging metrics
 
 # Load the BentoML runner for the model
 iris_clf_runner = bentoml.sklearn.get("iris_clf:latest").to_runner()
